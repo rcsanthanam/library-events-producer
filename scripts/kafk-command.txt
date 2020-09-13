@@ -5,3 +5,7 @@ zookeeper-server-start.bat ..\..\config\zookeeper.properties
 Start up the Kafka Broker
 -------------------------
 kafka-server-start.bat ..\..\config\server.properties
+
+List all topics 
+---------------
+kafka-topics.bat --zookeeper localhost:2181 --list
