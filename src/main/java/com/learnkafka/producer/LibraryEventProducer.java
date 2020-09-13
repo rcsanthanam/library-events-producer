@@ -1,6 +1,7 @@
 package com.learnkafka.producer;
 
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -52,7 +53,7 @@ public class LibraryEventProducer {
 	 SendResult<Integer, String> sendResult = null;
 	try {
 	    sendResult = kafkaTemplate
-	    	.sendDefault(key, value).get();
+	    	.sendDefault(key, value).get(1,TimeUnit.SECONDS);
 	} catch (InterruptedException | ExecutionException e) {
 	    log.error("Error sending the message key {} and value - {} and the exception is {}", key,
 			value, e.getMessage());
