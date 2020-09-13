@@ -20,11 +20,23 @@ public class LibraryEventsController {
     @Autowired
     LibraryEventProducer libraryEventProducer;
 
+    //Asynch approach 
     @PostMapping("/v1/libraryevent")
     public ResponseEntity<LibraryEvent> postLibraryEvents(@RequestBody LibraryEvent libraryEvent)
 	    throws JsonProcessingException {
-	log.info("Library post event..");
+	log.info("Asynch : Library post event..");
 	libraryEventProducer.sendLibraryEvents(libraryEvent);
+	log.info("Message posted successfully...");
+	return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent);
+    }
+    
+    //Asynch approach 
+    @PostMapping("/v1/libraryevent/synch")
+    public ResponseEntity<LibraryEvent> postLibraryEventsSynch(@RequestBody LibraryEvent libraryEvent)
+	    throws Exception {
+	log.info("Synch : Library post event..");
+	libraryEventProducer.sendLibraryEventsSynch(libraryEvent);
+	log.info("Message posted successfully...");
 	return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent);
     }
 
