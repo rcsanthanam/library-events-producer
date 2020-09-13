@@ -1,9 +1,12 @@
 package com.learnkafka.producer;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.header.Header;
+import org.apache.kafka.common.header.internals.RecordHeader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -76,7 +79,9 @@ public class LibraryEventProducer {
     
     private ProducerRecord<Integer, String> buildProducerRecord(String topic, Integer key,
 	    String value) {
-	return new ProducerRecord<>(topic,null,key,value,null);
+	//Add meta data - we can use Headers to add about data/origin of data/other details
+	List<Header> headers = List.of(new RecordHeader("event-source", "scanner".getBytes()));
+	return new ProducerRecord<>(topic,null,key,value,headers);
     }
 
     public SendResult<Integer, String> sendLibraryEventsSynch(LibraryEvent libraryEvent) throws Exception {
