@@ -39,5 +39,15 @@ public class LibraryEventsController {
 	log.info("Message posted successfully...");
 	return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent);
     }
+    
+    //Asynch approach 
+    @PostMapping("/v1/libraryevent/topics")
+    public ResponseEntity<LibraryEvent> postLibraryEventsWithTopics(@RequestBody LibraryEvent libraryEvent)
+	    throws Exception {
+	log.info("Synch : Library post event..");
+	libraryEventProducer.sendLibraryEventsWithTopics(libraryEvent);
+	log.info("Message posted successfully...");
+	return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent);
+    }
 
 }
