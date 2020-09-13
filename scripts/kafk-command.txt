@@ -9,3 +9,7 @@ kafka-server-start.bat ..\..\config\server.properties
 List all topics 
 ---------------
 kafka-topics.bat --zookeeper localhost:2181 --list
+
+Console consumer
+----------------
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic library-events --from-beginning
