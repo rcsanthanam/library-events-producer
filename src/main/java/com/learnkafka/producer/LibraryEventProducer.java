@@ -53,7 +53,7 @@ public class LibraryEventProducer {
 	});
     }
     
-    public void sendLibraryEventsWithTopics(LibraryEvent libraryEvent) throws JsonProcessingException {
+    public void sendLibraryEventsProducerRecordApproach(LibraryEvent libraryEvent) throws JsonProcessingException {
 	Integer key = libraryEvent.getLibraryEventId();
 	String value = objectMapper.writeValueAsString(libraryEvent);
 	
