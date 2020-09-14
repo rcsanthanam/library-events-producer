@@ -12,18 +12,25 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.test.context.EmbeddedKafka;
+import org.springframework.test.context.TestPropertySource;
 
 import com.learnkafka.domain.Book;
 import com.learnkafka.domain.LibraryEvent;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class LibraryEventsControllerIntegrationTest {
+@EmbeddedKafka(topics = {"library-events"},partitions = 3)
+@TestPropertySource(properties = {
+	"spring.kafka.producer.bootstrap-servers=${spring.embedded.kafka.brokers}",
+	"spring.kafka.admin.properties.bootstrap.servers=${spring.embedded.kafka.brokers}"
+})
+public class LibraryEventsControllerIntegrationTest {
 
     @Autowired
     TestRestTemplate restTemplate;
 
     @Test
-    void postLibraryEvents() {
+    void postLibraryEvents() throws Exception{
 
 	// given
 	Book book = Book.builder()
