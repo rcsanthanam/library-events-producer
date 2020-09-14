@@ -20,9 +20,8 @@ public class LibraryEventsController {
     @Autowired
     LibraryEventProducer libraryEventProducer;
 
-  
-    @PostMapping("/v1/libraryevent/topics")
-    public ResponseEntity<LibraryEvent> postLibraryEventsWithTopics(@RequestBody LibraryEvent libraryEvent)
+    @PostMapping("/v1/libraryevent")
+    public ResponseEntity<LibraryEvent> postLibraryEvents(@RequestBody LibraryEvent libraryEvent)
 	    throws Exception {
 	log.info("Synch : Library post event..");
 	libraryEvent.setLibraryEventType(LibraryEventType.NEW);
