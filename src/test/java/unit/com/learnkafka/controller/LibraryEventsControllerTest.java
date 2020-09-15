@@ -1,7 +1,7 @@
 package com.learnkafka.controller;
 
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -46,7 +46,9 @@ class LibraryEventsControllerTest {
 		                                 .build();
 	String json = objectMapper.writeValueAsString(libraryEvent);
 	//when
-	doNothing().when(libraryEventProducer).sendLibraryEvents(isA(LibraryEvent.class));
+	when(libraryEventProducer.sendLibraryEventsProducerRecordApproach(isA(LibraryEvent.class))).thenReturn(null);
+	
+	//then
 	mockMvc.perform(post("/v1/libraryevent")
 	       .contentType(MediaType.APPLICATION_JSON_VALUE)
 	       .content(json))
@@ -69,7 +71,7 @@ class LibraryEventsControllerTest {
 		                                 .build();
 	String json = objectMapper.writeValueAsString(libraryEvent);
 	//when
-	doNothing().when(libraryEventProducer).sendLibraryEvents(isA(LibraryEvent.class));
+	when(libraryEventProducer.sendLibraryEventsProducerRecordApproach(isA(LibraryEvent.class))).thenReturn(null);
 	
 	//expected 
 	String expectedErrorMessage = "book.bookId - must not be null";
