@@ -39,7 +39,7 @@ import com.learnkafka.domain.LibraryEventType;
 	"spring.kafka.producer.bootstrap-servers=${spring.embedded.kafka.brokers}",
 	"spring.kafka.admin.properties.bootstrap.servers=${spring.embedded.kafka.brokers}"
 })
-public class LibraryEventsControllerIntegrationTest {
+class LibraryEventsControllerIntegrationTest {
 
     @Autowired
     TestRestTemplate restTemplate;
