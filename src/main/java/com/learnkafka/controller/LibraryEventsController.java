@@ -1,5 +1,7 @@
 package com.learnkafka.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +23,7 @@ public class LibraryEventsController {
     LibraryEventProducer libraryEventProducer;
 
     @PostMapping("/v1/libraryevent")
-    public ResponseEntity<LibraryEvent> postLibraryEvents(@RequestBody LibraryEvent libraryEvent)
+    public ResponseEntity<LibraryEvent> postLibraryEvents(@RequestBody @Valid LibraryEvent libraryEvent)
 	    throws Exception {
 	log.info("Synch : Library post event..");
 	libraryEvent.setLibraryEventType(LibraryEventType.NEW);

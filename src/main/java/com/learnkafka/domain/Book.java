@@ -1,5 +1,8 @@
 package com.learnkafka.domain;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,8 +14,11 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Book {
     
-    private int bookId;
+    @NotNull
+    private Integer bookId;
+    @NotEmpty
     private String bookName;
+    @NotEmpty
     private String bookAuthor;
     
 }
