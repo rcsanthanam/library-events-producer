@@ -3,6 +3,7 @@ package com.learnkafka.controller;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.junit.jupiter.api.Test;
@@ -80,6 +81,56 @@ class LibraryEventsControllerTest {
 	       .content(json))
 	       .andExpect(status().is4xxClientError())
 	       .andExpect(content().string(expectedErrorMessage));
+    }
+    
+    @Test 
+    void updateLibraryEvent() throws Exception{
+	// given
+	Book book = Book.builder()
+	        .bookId(123)
+	        .bookName("Kafka using Spring Boot")
+	        .bookAuthor("Ravi")
+	        .build();	
+		
+		LibraryEvent libraryEvent = LibraryEvent.builder()
+			                                 .libraryEventId(123)
+			                                 .book(book)
+			                                 .build();
+		String json = objectMapper.writeValueAsString(libraryEvent);
+		//when
+		when(libraryEventProducer.sendLibraryEventsProducerRecordApproach(isA(LibraryEvent.class))).thenReturn(null);
+		
+		//then
+		mockMvc.perform(put("/v1/libraryevent")
+		       .contentType(MediaType.APPLICATION_JSON_VALUE)
+		       .content(json))
+		       .andExpect(status().isOk());
+    }
+    
+    @Test
+    void updateLibraryEvent_withNullLibraryEventId() throws Exception{
+	// given
+		Book book = Book.builder()
+			        .bookId(123)
+			        .bookName("Kafka using Spring Boot")
+			        .bookAuthor("Ravi")
+			        .build();
+		
+		LibraryEvent libraryEvent = LibraryEvent.builder()
+			                                 .libraryEventId(null)
+			                                 .book(book)
+			                                 .build();
+		String json = objectMapper.writeValueAsString(libraryEvent);
+		//when
+		when(libraryEventProducer.sendLibraryEventsProducerRecordApproach(isA(LibraryEvent.class))).thenReturn(null);
+		
+		//expected 
+		String expectedErrorMessage = "Please enter valid liberary event ID";
+		mockMvc.perform(put("/v1/libraryevent")
+		       .contentType(MediaType.APPLICATION_JSON_VALUE)
+		       .content(json))
+		       .andExpect(status().is4xxClientError())
+		       .andExpect(content().string(expectedErrorMessage));
     }
 
 }
